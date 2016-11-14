@@ -1,0 +1,30 @@
+unit Utilerias;
+
+interface
+
+uses
+  Data.DB, Data.win.ADODB, //para BD
+  Dialogs,
+  System.SysUtils;
+  function AbrirConexionBD(Conexion.TAODConnection):Boolean;
+
+  implementation
+  function AbrirConexionBD(Conexion.TAODConnection):Boolean;
+  begin
+    Result:=false;
+    try
+      Conexion.Connected:=true;
+      Result:=Conexion.Connected;
+    except
+      on E:Exception do
+         ShowMessage('Ocurrio un erro al intentar abrir la BD'+
+                     '');
+
+    end;
+  end
+
+
+
+uses Unit1;
+
+end.

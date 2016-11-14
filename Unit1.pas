@@ -1,0 +1,56 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls, Vcl.Samples.Spin,
+  Vcl.Grids, Vcl.DBGrids, Data.Win.ADODB, Vcl.ExtCtrls;
+
+type
+  TForm1 = class(TForm)
+    Panel1: TPanel;
+    ADOConnection1: TADOConnection;
+    ADOStoredProc1: TADOStoredProc;
+    DataSource1: TDataSource;
+    DBGrid1: TDBGrid;
+    Button1: TButton;
+    entidad: TSpinEdit;
+    procedure Button1Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+if entidad.Value > 0 then
+  begin
+      ADOStoredProc1.Active:= False;
+      ADOStoredProc1.Parameters.ParamByName('@idCliente').Value := entidad.Value;
+      ADOStoredProc1.Active := True;
+    end
+Else
+   begin
+    Raise Exception.Create('ingrese el id del cliente para continuar!!!');
+   end;
+end;
+
+
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  ADOConnection1.Close;
+end;
+
+end.
